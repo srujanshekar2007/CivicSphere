@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme static {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* CivicSync forest green and quiet neutral surfaces */
+  --color-brand-50: #edf7f1; --color-brand-100: #d8ecdf; --color-brand-200: #b6dcc5; --color-brand-300: #85c5a0;
+  --color-brand-400: #53a97a; --color-brand-500: #31885d; --color-brand-600: #216f4a; --color-brand-700: #175b3d;
+  --color-brand-800: #124a33; --color-brand-900: #103d2c; --color-brand-950: #09271c;
+
+  /* Every existing "emerald" class now renders in the brand green */
+  --color-emerald-50: #edf7f1; --color-emerald-100: #d8ecdf; --color-emerald-200: #b6dcc5; --color-emerald-300: #85c5a0;
+  --color-emerald-400: #53a97a; --color-emerald-500: #31885d; --color-emerald-600: #216f4a; --color-emerald-700: #175b3d;
+  --color-emerald-800: #124a33; --color-emerald-900: #103d2c; --color-emerald-950: #09271c;
+
+  --color-slate-50: #f6f8f7;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.75rem;
+  --shadow-sm: 0 1px 2px rgb(11 36 39 / 0.04), 0 10px 28px -16px rgb(11 36 39 / 0.22);
+}
+
+:root { color-scheme: light; --card: #ffffff; --ink: #0f172a; }
+
+/* DARK THEME: swapping these variables flips every page, old and new */
+.dark {
+  color-scheme: dark; --card: #111b2b; --ink: #e2e8f0;
+  --color-slate-50: #0a111d; --color-slate-100: #162135; --color-slate-200: #223049; --color-slate-300: #2e3f5c;
+  --color-slate-400: #64748b; --color-slate-500: #94a3b8; --color-slate-600: #a9b6c8; --color-slate-700: #c3cddb;
+  --color-slate-800: #e2e8f0; --color-slate-900: #f1f5f9;
+  --color-brand-50: #0d2a26; --color-brand-100: #11403a; --color-emerald-50: #0d2a26; --color-emerald-100: #11403a;
+  --color-red-50: rgb(248 113 113 / 0.14); --color-red-100: rgb(248 113 113 / 0.22);
+  --color-amber-50: rgb(251 191 36 / 0.14); --color-amber-100: rgb(251 191 36 / 0.22);
+  --color-sky-50: rgb(56 189 248 / 0.14); --color-sky-100: rgb(56 189 248 / 0.22);
+  --color-violet-50: rgb(167 139 250 / 0.16); --color-orange-50: rgb(251 146 60 / 0.15);
+}
+.dark .bg-white { background-color: var(--card); }
+.dark .text-emerald-700, .dark .text-emerald-800, .dark .text-brand-700, .dark .text-brand-800 { color: #83d8c7; }
+.dark .text-red-600, .dark .text-red-700, .dark .text-red-800 { color: #fca5a5; }
+.dark .text-amber-600, .dark .text-amber-700, .dark .text-amber-800, .dark .text-amber-900, .dark .text-amber-950 { color: #fcd34d; }
+.dark .text-sky-700, .dark .text-sky-950 { color: #7dd3fc; }
+.dark .text-violet-700 { color: #c4b5fd; }
+.dark .text-orange-700 { color: #fdba74; }
+.dark ::placeholder { color: #64748b; }
+
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--color-slate-50); color: var(--ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+.sidebar-surface { background: #103d33; }
+.glass { background: color-mix(in srgb, var(--card) 96%, transparent); backdrop-filter: blur(8px); }
+.fab { background: #175b3d; }
+.dark .landing-hero .text-slate-600 { color: #475569; }
+.dark .landing-hero .text-slate-500 { color: #64748b; }
+.dark .landing-hero .text-slate-900 { color: #0f172a; }
+.dark .landing-header { background: rgb(255 255 255 / 0.96); }
+.dark .landing-header .dark\:text-white { color: #15223f; }
+.dark .landing-header .text-slate-600 { color: #475569; }
+.dark .landing-header .text-slate-700 { color: #334155; }
+.brand-wash {
+  background: radial-gradient(1100px 480px at 12% -10%, #dbf5f0 0%, transparent 60%),
+              radial-gradient(900px 480px at 100% 0%, #e0f2fe 0%, transparent 55%), var(--color-slate-50);
+}
+.dark .brand-wash { background: radial-gradient(1000px 480px at 12% -10%, #0e3a35 0%, transparent 60%), var(--color-slate-50); }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+dialog::backdrop { background: rgb(2 12 14 / 0.55); backdrop-filter: blur(2px); }
+:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+@media print {
+  aside, nav, header, .no-print { display: none !important; }
+  main, .lg\:pl-64 { padding-left: 0 !important; }
+  body { background: #fff; }
+}
+
+/* Tailwind's reset removes the auto-centering of native dialogs: put it back */
+@layer base { dialog { margin: auto; } }
+
+/* Map popups always have a white card, so keep their text dark in both themes */
+.maplibregl-popup-content { color: #0f172a; }
+
+/* In dark mode the slate scale is inverted: keep dark "pill" badges readable */
+.dark .bg-slate-800, .dark .bg-slate-900 { background-color: var(--color-brand-700); }
